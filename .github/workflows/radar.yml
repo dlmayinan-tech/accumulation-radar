@@ -1,0 +1,26 @@
+name: 币圈庄家雷达
+
+on:
+ schedule:
+ - cron: '0 2 * * *'
+ - cron: '30 * * * *'
+ workflow_dispatch:
+
+jobs:
+ run-radar:
+ runs-on: ubuntu-latest
+ steps:
+ - uses: actions/checkout@v4
+ - uses: actions/setup-python@v5
+ with:
+ python-version: '3.10'
+ - run: pip install requests
+ - run: |
+ echo "TG_BOT_TOKEN=${{ secrets.TG_BOT_TOKEN }}" > .env.oi
+ echo "TG_CHAT_ID=${{ secrets.TG_CHAT_ID }}" >> .env.oi
+ - if: github.event.schedule == '0 2 * * *'
+ run: python3 accumulation_radar.py pool
+ - if: github.event.schedule == '30 * * * *'
+ run: python3 accumulation_radar.py oi
+ - if: github.event_name == 'workflow_dispatch'
+ run: python3 accumulation_radar.py full
