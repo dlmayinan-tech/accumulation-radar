@@ -19,4 +19,4 @@ jobs:
       - name: 创建配置
         run: python -c "open('.env.oi','w').write('TG_BOT_TOKEN=' + '${{ secrets.TG_BOT_TOKEN }}' + '\nTG_CHAT_ID=' + '${{ secrets.TG_CHAT_ID }}')"
       - name: 运行脚本
-        run: python -c "import requests; r = requests.get('https://httpbin.org/get', timeout=10); print('网络OK:', r.status_code)"
+        run: python -c "import requests; r = requests.get('https://fapi.binance.com/fapi/v1/exchangeInfo', timeout=15); data = r.json(); print('状态:', r.status_code, '合约数:', len(data.get('symbols', [])) if isinstance(data, dict) else '不是dict')"
