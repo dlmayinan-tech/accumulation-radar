@@ -16,4 +16,4 @@ jobs:
           python-version: '3.10'
       - run: pip install requests
       - run: echo "TG_BOT_TOKEN=${{ secrets.TG_BOT_TOKEN }}" > .env.oi && echo"TG_CHAT_ID=${{secrets.TG_CHAT_ID }}" >> .env.oi
-      - run: python3 accumulation_radar.py full
+      - run: python accumulation_radar.py full
