@@ -10,17 +10,21 @@ jobs:
  run-radar:
  runs-on: ubuntu-latest
  steps:
- - uses: actions/checkout@v4
- - uses: actions/setup-python@v5
+ - name: 检出代码
+ uses: actions/checkout@v4
+
+ - name: 设置 Python
+ uses: actions/setup-python@v5
  with:
  python-version: '3.10'
- - run: pip install requests
- - run: |
+
+ - name: 安装依赖
+ run: pip install requests
+
+ - name: 创建配置
+ run: |
  echo "TG_BOT_TOKEN=${{ secrets.TG_BOT_TOKEN }}" > .env.oi
  echo "TG_CHAT_ID=${{ secrets.TG_CHAT_ID }}" >> .env.oi
- - if: github.event.schedule == '0 2 * * *'
- run: python3 accumulation_radar.py pool
- - if: github.event.schedule == '30 * * * *'
- run: python3 accumulation_radar.py oi
- - if: github.event_name == 'workflow_dispatch'
+
+ - name: 运行脚本
  run: python3 accumulation_radar.py full
