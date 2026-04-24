@@ -1,1 +1,5 @@
+# 每天10:00更新收筹标的池
+0 10 * * *  cd /path/to/accumulation-radar && python3 accumulation_radar.py pool >> accumulation.log 2>&1
 
+# 每小时:30扫描OI异动+三策略评分
+30 * * * *  cd /path/to/accumulation-radar && python3 accumulation_radar.py oi >> accumulation_oi.log 2>&1 
