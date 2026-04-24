@@ -19,13 +19,4 @@ jobs:
       - name: 创建配置
         run: python -c "open('.env.oi','w').write('TG_BOT_TOKEN=' + '${{ secrets.TG_BOT_TOKEN }}' + '\nTG_CHAT_ID=' + '${{ secrets.TG_CHAT_ID }}')"
       - name: 运行脚本
-        run: |
-          python -c "
-          import requests, time
-          url = 'https://fapi.binance.com/fapi/v1/exchangeInfo'
-          try:
-          r = requests.get(url, timeout=15)
-          print('API状态:', r.status_code, '合约数量:', len(r.json().get('symbols', [])))
-          except Exception as e:
-          print('API错误:', e)
-          "
+        run: python -c "import requests; r = requests.get('https://httpbin.org/get', timeout=10); print('网络OK:', r.status_code)"
